@@ -52,9 +52,10 @@
                         <li class="dropdown">
                             <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Edit</a>
                             <ul class="dropdown-menu icons">
-                                <li><a href="javascript:void(0)" id="cmd-copy">Copy</a></li>
-                                <li><a href="javascript:void(0)" id="cmd-cut">Cut</a></li>
-                                <li><a href="javascript:void(0)" id="cmd-paste">Paste</a></li>
+                            	<li class="divider clipboard-ops">Clipboard</li>
+                                <li><a href="javascript:void(0)" class="clipboard-ops" id="cmd-copy">Copy</a></li>
+                                <li><a href="javascript:void(0)" class="clipboard-ops" id="cmd-cut">Cut</a></li>
+                                <li><a href="javascript:void(0)" class="clipboard-ops" id="cmd-paste">Paste</a></li>
                                 <li class="divider"></li>
                                 <li><a href="javascript:void(0)" id="cmd-select-all">Select All</a></li>
                             </ul>
@@ -106,6 +107,7 @@
             </div>
             <div class="status-bar">
                 <div class="left-side">
+                	<div class="status" id="cursor">Sel:&nbsp;<span id="cursor-start"></span>,&nbsp;<span id="cursor-end"></span></div>
                     <div class="status danger" id="missing" title="Some of the components are missing. Please check your browser console.">Missing</div>
                 </div>
                 <div class="right-side">

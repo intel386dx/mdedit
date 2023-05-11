@@ -79,13 +79,37 @@ function tglSelTxt(el, start, end, debugMode) {
         el.value = before + newSelected + after;
     };
 };
+cursorStart = null;
+cursorEnd = null;
+updateCursorPos = null;
+function startCursorPos() {
+	updateCursorPos = setInterval(function() {
+		cursorStart = $i("editor-edit-field").selectionStart;
+		cursorEnd = $i("editor-edit-field").selectionEnd;
+		$i("cursor-start").innerHTML = cursorStart;
+	    $i("cursor-end").innerHTML = cursorEnd;
+	}, 50);
+};
+function stopCursorPos() {
+	clearInterval(updateCursorPos);
+};
+startCursorPos();
+
+if (typeof navigator.clipboard.readText != "function") {
+	$i("editor-container").classList.add("no-clipboard");
+};
 
 function copyText(el, cutText) {
-    start = el.selectionStart | 0;
-    end = el.selectionEnd | el.value.length;
+    start = cursorStart | 0;
+    console.log("start: " + start);
+    end = cursorEnd | el.value.length;
+    console.log("end: " + end);
     before = el.value.substring(0, start);
+    console.log("before: " + before);
     after = el.value.substring(end);
+    console.log("after: " + after);
     toBeCopied = el.value.substring(start, end);
+    console.log("to be copied: " + toBeCopied);
     navigator.clipboard.write(toBeCopied).then(function() {
         console.log((cutText? "Text has been cut" : "Text has been copied"))
     }, function(x) {
@@ -97,14 +121,14 @@ function copyText(el, cutText) {
 };
 
 function pasteText(el) {
-    start = el.selectionStart | 0;
-    end = el.selectionEnd | el.value.length;
+    start = cursorStart | 0;
+    end = cursorEnd | el.value.length;
     before = el.value.substring(0, start);
     after = el.value.substring(end);
     toBePasted = el.value.substring(start, end);
     navigator.clipboard.readText().then(function(x) {
         toBePasted = x;
-    }, function() {
+    }, function(x) {
         console.error("Cannot get the clipboard contents. Reason: \n");
         console.error(x);
     });
@@ -127,7 +151,7 @@ function selfCheck() {
 selfCheckInterval = setInterval(selfCheck, 100);
 
 function parse(markdown, fonts) {
-    sanitizedFonts = fonts.replace(";", "");
+    if (fonts != null) sanitizedFonts = fonts.replace(";", "");
     return DOMPurify.sanitize("<article" + (fonts != null? "style='font-family:" + sanitizedFonts + "'>" : "'>") + marked.parse(markdown) + "</article>");
 };
 function parseHTML(html) {
@@ -250,6 +274,17 @@ $i("cmd-save-md").onclick = function() {
     lastSavedContent = openedContent;
 };
 $i("cmd-save-html").onclick = function() {
-    saveFile("text/markdown", parse($i("editor-edit-field").value.toString(), null), openedFileName);
+	saveName = openedFileName.split(".");
+	saveName[saveNameFile.length - 1] = "htm";
+    saveFile("text/markdown", parse($i("editor-edit-field").value.toString(), null), saveName.join("."));
     lastSavedContent = openedContent;
+};
+$i("cmd-copy").onclick = function() {
+	copyText($i("editor-edit-field"), false);
+};
+$i("cmd-cut").onclick = function() {
+	copyText($i("editor-edit-field"), true);
+};
+$i("cmd-paste").onclick = function() {
+	pasteText($i("editor-edit-field"));
 };

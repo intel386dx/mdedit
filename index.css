@@ -2,6 +2,7 @@
 * {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 :root,
 html,
@@ -70,13 +71,17 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
                 0 0 8px white inset, 0 0 8px white inset;
     text-shadow: 0 0 3px white, 0 0 3px white,
                  0 0 3px white, 0 0 3px white !important;
+    border-bottom: 2px solid transparent;
 }
 .editor-menubar .navbar-inner .dropdown-toggle:hover {
     background-color: #f8f8f8;
+    border-bottom: 2px solid #ddd;
 }
 .editor-menubar .navbar-inner .dropdown.open .dropdown-toggle,
 .editor-menubar .navbar-inner .dropdown .dropdown-toggle:active {
-    background-color: #eee !important;
+    background-color: #f0f8ff !important;
+    border-bottom: 2px solid #08f;
+    color: #08f !important;
 }
 .editor-menubar .dropdown-menu {
     margin: 0px;
@@ -128,6 +133,14 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
     height: 16px;
     font-size: 16px;
     margin-right: 8px;
+}
+.editor-container.no-clipboard .editor-menubar .dropdown-menu.icons li a.clipboard-ops {
+	pointer-events: none;
+	color: gray;
+}
+.editor-container.no-clipboard .editor-menubar .dropdown-menu.icons li.divider.clipboard-ops::after {
+	content: " is disabled";
+	display: inline;
 }
 #cmd-new::before {
     content: "\E24D"
@@ -310,6 +323,14 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 #missing::before {
     content: '\E002';
     font-family: "Material Icons";
+}
+@media only screen and (max-width: 375px) {
+	.editor-menubar .navbar-inner .brand {
+		display: none;
+	}
+	.editor-menubar .navbar-inner {
+		padding-left: 8px;
+	}
 }
 @media only screen and (min-width: 600px) {
     .container.autosplit .nav.nav-tabs {
