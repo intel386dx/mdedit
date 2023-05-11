@@ -3,6 +3,8 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- https://stackoverflow.com/questions/48081328/how-to-use-content-security-policy-with-localhost-files -->
+        <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'; img-src * data: 'unsafe-inline'; connect-src * 'unsafe-inline'; frame-src *;"/>
         <title>Markdown Editor</title>
 
         <!-- External dependencies: -->
@@ -54,7 +56,7 @@
                             <ul class="dropdown-menu icons">
                             	<li class="divider clipboard-ops">
                                     Clipboard<span class="clipboard-unsupported">ing&nbsp;is disabled. 
-                                        <a href="https://stackoverflow.com/questions/67440036/navigator-clipboard-readtext-is-not-working-in-firefox" style="margin-inline-start:2px">Find out why</a>
+                                        <a href="https://stackoverflow.com/questions/67440036/navigator-clipboard-readtext-is-not-working-in-firefox" target="_blank" style="margin-inline-start:2px">Find out why</a>
                                     </span>
                                 </li>
                                 <li><a href="javascript:void(0)" class="clipboard-ops" id="cmd-copy">Copy</a></li>

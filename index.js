@@ -146,17 +146,20 @@ window.onbeforeunload = function() {
 
 selfCheckInterval = "";
 function selfCheck() {
-    if (marked && DOMPurify && (new TurndownService())) {
-        $i("missing").style.display = "none"
-    } else {
-        clearInterval(selfCheckInterval)
-    };
+    try {
+        if (marked && DOMPurify && (new TurndownService())) {
+            $i("missing").style.display = "none"
+        } else {
+            clearInterval(selfCheckInterval)
+        };
+    } catch(x) {
+        e = x;
+    }
 };
 selfCheckInterval = setInterval(selfCheck, 100);
 
-function parse(markdown, fonts) {
-    if (fonts != null) sanitizedFonts = fonts.replace(";", "");
-    return DOMPurify.sanitize("<article" + (fonts != null? "style='font-family:" + sanitizedFonts + "'>" : ">") + marked.parse(markdown) + "</article>");
+function parse(markdown) {
+    return DOMPurify.sanitize(marked.parse(markdown));
 };
 function parseHTML(html) {
     return DOMPurify.sanitize((new TurndownService()).turndown(html).toString());
@@ -168,6 +171,7 @@ function refreshFrame() {
         let font = $i("font-family").value.toString() !== ""?
                    $i("font-family").value.toString() :
                    "Arial, sans-serif";
+        let sanitizedFont = font.replace(";", " ");
         frame = $i("editor-preview-frame").contentWindow.document;
         frame.open();
         frame.write(
@@ -240,7 +244,7 @@ function refreshFrame() {
         }
         </style>
         </head>
-        <body>
+        <body style="font-family:${sanitizedFont}">
         ${parse($i("editor-edit-field").value.toString(), font)}
         </body>
         </html>`
@@ -282,9 +286,9 @@ $i("cmd-save-md").onclick = function() {
 };
 $i("cmd-save-html").onclick = function() {
 	saveName = openedFileName.split(".");
-	saveName[saveNameFile.length - 1] = "htm";
+	saveName[saveName.length - 1] = "htm";
     saveFile("text/markdown", parse($i("editor-edit-field").value.toString(), null), saveName.join("."));
-    lastSavedContent = openedContent;
+    lastSavedContent = $i("editor-edit-field").value;
 };
 $i("cmd-copy").onclick = function() {
 	copyText($i("editor-edit-field"), false);
@@ -295,3 +299,6 @@ $i("cmd-cut").onclick = function() {
 $i("cmd-paste").onclick = function() {
 	pasteText($i("editor-edit-field"));
 };
+$i("cmd-select-all").onclick = function() {
+    $i("editor-edit-field").select()
+}
