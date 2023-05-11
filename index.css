@@ -89,7 +89,8 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
     padding: 4px;
     font-size: 9pt;
     background-color: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(4px)
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
 }
 .editor-menubar .dropdown-menu::before,
 .editor-menubar .dropdown-menu::after {
@@ -105,6 +106,7 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
     background-color: transparent;
     font-size: 7pt;
     text-transform: uppercase;
+    line-height: 1.8em;
 }
 .editor-menubar .dropdown-menu li a {
     display: flex;
@@ -134,13 +136,27 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
     font-size: 16px;
     margin-right: 8px;
 }
+.editor-container .editor-menubar .dropdown-menu.icons li.divider.clipboard-ops .clipboard-unsupported {
+    display: none;
+}
 .editor-container.no-clipboard .editor-menubar .dropdown-menu.icons li a.clipboard-ops {
 	pointer-events: none;
 	color: gray;
 }
-.editor-container.no-clipboard .editor-menubar .dropdown-menu.icons li.divider.clipboard-ops::after {
-	content: " is disabled";
+.editor-container.no-clipboard .editor-menubar .dropdown-menu.icons li.divider.clipboard-ops .clipboard-unsupported {
+    display: inline;
+}
+.editor-container.no-clipboard .editor-menubar .dropdown-menu.icons li.divider.clipboard-ops .clipboard-unsupported a {
 	display: inline;
+    padding: 0px;
+    margin: 0px;
+    border-radius: 0px;
+}
+.editor-container.no-clipboard .editor-menubar .dropdown-menu.icons li.divider.clipboard-ops .clipboard-unsupported a::before {
+    display: none;
+}
+.editor-container.no-clipboard .editor-menubar .dropdown-menu.icons li.divider.clipboard-ops .clipboard-unsupported a:hover {
+    background-color: transparent;
 }
 #cmd-new::before {
     content: "\E24D"
@@ -231,13 +247,17 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
     background-image: none;
     border: 0px solid;
     border-radius: 0px;
-    color: #069
+    box-shadow: 0 0 4px white inset, 0 0 4px white inset,
+                0 0 4px white inset, 0 0 4px white inset;
+    text-shadow: 0 0 1px white, 0 0 1px white,
+                 0 0 1px white, 0 0 1px white !important;
 }
 .tab-pane .tab-title button:hover {
-    background-color: #ddd;
+    background-color: #f8f8f8;
 }
 .tab-pane .tab-title button:active {
-    background-color: #aaa;
+    background-color: #f0f8ff;
+    color: #08c;
 }
 .editor-edit {
     display: flex;

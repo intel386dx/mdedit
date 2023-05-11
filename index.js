@@ -84,10 +84,14 @@ cursorEnd = null;
 updateCursorPos = null;
 function startCursorPos() {
 	updateCursorPos = setInterval(function() {
-		cursorStart = $i("editor-edit-field").selectionStart;
-		cursorEnd = $i("editor-edit-field").selectionEnd;
-		$i("cursor-start").innerHTML = cursorStart;
-	    $i("cursor-end").innerHTML = cursorEnd;
+		try {
+            cursorStart = $i("editor-edit-field").selectionStart;
+            cursorEnd = $i("editor-edit-field").selectionEnd;
+            $i("cursor-start").innerHTML = cursorStart;
+            $i("cursor-end").innerHTML = cursorEnd;
+        } catch(x) {
+            e = x;
+        };
 	}, 50);
 };
 function stopCursorPos() {
@@ -110,7 +114,7 @@ function copyText(el, cutText) {
     console.log("after: " + after);
     toBeCopied = el.value.substring(start, end);
     console.log("to be copied: " + toBeCopied);
-    navigator.clipboard.write(toBeCopied).then(function() {
+    navigator.clipboard.writeText(toBeCopied).then(function() {
         console.log((cutText? "Text has been cut" : "Text has been copied"))
     }, function(x) {
         console.error((cutText? "Cannot cut the text" : "Cannot copy text") + ". Reason: \n");
@@ -152,7 +156,7 @@ selfCheckInterval = setInterval(selfCheck, 100);
 
 function parse(markdown, fonts) {
     if (fonts != null) sanitizedFonts = fonts.replace(";", "");
-    return DOMPurify.sanitize("<article" + (fonts != null? "style='font-family:" + sanitizedFonts + "'>" : "'>") + marked.parse(markdown) + "</article>");
+    return DOMPurify.sanitize("<article" + (fonts != null? "style='font-family:" + sanitizedFonts + "'>" : ">") + marked.parse(markdown) + "</article>");
 };
 function parseHTML(html) {
     return DOMPurify.sanitize((new TurndownService()).turndown(html).toString());
@@ -193,6 +197,7 @@ function refreshFrame() {
                 monospace;
                 border: 1px solid #ddd;
                 background-color: #f8f8f8;
+            padding-inline: 4px;
         }
         pre {
             padding: 8px;
@@ -201,6 +206,8 @@ function refreshFrame() {
         pre code {
             background-color: transparent;
             border: 0px solid;
+            margin: 0px;
+            padding-inline: 0px;
         }
         th {
             background-color: #f0f0f0;

@@ -52,7 +52,11 @@
                         <li class="dropdown">
                             <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Edit</a>
                             <ul class="dropdown-menu icons">
-                            	<li class="divider clipboard-ops">Clipboard</li>
+                            	<li class="divider clipboard-ops">
+                                    Clipboard<span class="clipboard-unsupported">ing&nbsp;is disabled. 
+                                        <a href="https://stackoverflow.com/questions/67440036/navigator-clipboard-readtext-is-not-working-in-firefox" style="margin-inline-start:2px">Find out why</a>
+                                    </span>
+                                </li>
                                 <li><a href="javascript:void(0)" class="clipboard-ops" id="cmd-copy">Copy</a></li>
                                 <li><a href="javascript:void(0)" class="clipboard-ops" id="cmd-cut">Cut</a></li>
                                 <li><a href="javascript:void(0)" class="clipboard-ops" id="cmd-paste">Paste</a></li>
@@ -101,7 +105,7 @@
                         <div class="tab-title">Preview
                             <button id="refresh-frame" title="Refresh"><i class="material-icons">&#xE5D5;</i></button>
                         </div>
-                        <iframe id="editor-preview-frame" class="editor-preview-frame"></iframe>
+                        <iframe id="editor-preview-frame" class="editor-preview-frame" alt="Preview Pane"></iframe>
                     </div>
                 </div>
             </div>
