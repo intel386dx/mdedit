@@ -45,55 +45,71 @@ function saveFile (mimeType, data, fileName) {
 };
 
 function tglSelTxt(el, start, end, debugMode) {
-    startSel = el.selectionStart;
-    debugMode && console.log("start selection position: " + startSel);
-
-    endSel = el.selectionEnd;
-    debugMode && console.log("end selection position: " + endSel);
-    
-    startPos = startSel = 0? Math.abs(startSel - start.length + 1) : 0;
-    debugMode && console.log("start position = " + startPos);
-
-    endPos = Math.abs(endSel + end.length - 1);
-    debugMode && console.log("end position = " + endPos);
-
+    startPos = el.selectionStart;
+    debugMode && console.log("start selection position: " + startPos);
+    endPos = el.selectionEnd;
+    debugMode && console.log("end selection position: " + endPos);
     txt = el.value.toString();
     debugMode && console.log("text = " + txt);
-
     before = txt.substring(0, startPos);
     debugMode && console.log("text before selection = " + before);
-
     after = txt.substring(endPos);
     debugMode && console.log("text after selection = " + after);
-
-    before2 = txt.substring(0, startPos - 1);
-    debugMode && console.log("text before selection 2 = " + before);
-
-    after2 = txt.substring(endPos + 1);
-    debugMode && console.log("text after selection 2 = " + after);
-
     selected = txt.substring(startPos, endPos);
-    selected2 = txt.substring(startPos - 1, endPos + 2)
     debugMode && console.log("selection = " + selected);
-    debugMode && console.log("selection 2 = " + selected2);
-
     newSelected = selected;
-    if (selected2.startsWith(start) && selected2.endsWith(end)) {
-        newSelected = selected2.substring(start.length, selected2.length - end.length);
-        el.selectionStart = startPos - 1; el.selectionEnd = endPos + 2;
-        debugMode && console.log("Has been trimmed to " + newSelected);
+    if (after.startsWith(start) && before.endsWith(end)) {
+        before2 = before.substring(0, startPos - start.length);
+        after2 = after.substring(end.length);
         el.value = before2 + newSelected + after2;
+        el.selectionStart = before2.length;
+        el.selectionEnd = before2.length + newSelected.length;
+        debugMode && console.log("Has been trimmed to " + newSelected);
     } else if (selected.startsWith(start) && selected.endsWith(end)) {
         newSelected = selected.substring(start.length, selected.length - end.length);
-        el.selectionStart = startPos - 1; el.selectionEnd = endPos + 2;
+        el.selectionStart = before.length;
+        el.selectionEnd = before.length + newSelected.length;
         debugMode && console.log("Has been trimmed to " + newSelected);
         el.value = before + newSelected + after;
     } else {
         newSelected = start + selected + end;
-        el.selectionStart = startPos; el.selectionEnd = endPos;
+        el.selectionStart = before.length;
+        el.selectionEnd = before.length + newSelected.length;
         debugMode && console.log("Has been appended to " + newSelected);
         el.value = before + newSelected + after;
     };
+};
+
+function copyText(el, cutText) {
+    start = el.selectionStart | 0;
+    end = el.selectionEnd | el.value.length;
+    before = el.value.substring(0, start);
+    after = el.value.substring(end);
+    toBeCopied = el.value.substring(start, end);
+    navigator.clipboard.write(toBeCopied).then(function() {
+        console.log((cutText? "Text has been cut" : "Text has been copied"))
+    }, function(x) {
+        console.error((cutText? "Cannot cut the text" : "Cannot copy text") + ". Reason: \n");
+        console.error(x);
+    });
+    resultingText = before + (!cutText? toBeCopied : "") + after;
+    el.value = resultingText;
+};
+
+function pasteText(el) {
+    start = el.selectionStart | 0;
+    end = el.selectionEnd | el.value.length;
+    before = el.value.substring(0, start);
+    after = el.value.substring(end);
+    toBePasted = el.value.substring(start, end);
+    navigator.clipboard.readText().then(function(x) {
+        toBePasted = x;
+    }, function() {
+        console.error("Cannot get the clipboard contents. Reason: \n");
+        console.error(x);
+    });
+    resultingText = before + toBePasted + after;
+    el.value = resultingText;
 };
 
 window.onbeforeunload = function() {
@@ -112,7 +128,7 @@ selfCheckInterval = setInterval(selfCheck, 100);
 
 function parse(markdown, fonts) {
     sanitizedFonts = fonts.replace(";", "");
-    return DOMPurify.sanitize("<article style='font-family:" + sanitizedFonts + "'>" + marked.parse(markdown) + "</article>");
+    return DOMPurify.sanitize("<article" + (fonts != null? "style='font-family:" + sanitizedFonts + "'>" : "'>") + marked.parse(markdown) + "</article>");
 };
 function parseHTML(html) {
     return DOMPurify.sanitize((new TurndownService()).turndown(html).toString());
@@ -231,5 +247,9 @@ $i("cmd-open").onclick = function() {
 };
 $i("cmd-save-md").onclick = function() {
     saveFile("text/markdown", $i("editor-edit-field").value.toString(), openedFileName);
+    lastSavedContent = openedContent;
+};
+$i("cmd-save-html").onclick = function() {
+    saveFile("text/markdown", parse($i("editor-edit-field").value.toString(), null), openedFileName);
     lastSavedContent = openedContent;
 };
