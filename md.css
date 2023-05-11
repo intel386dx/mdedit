@@ -1,0 +1,15 @@
+article {
+    font-family: "Times New Roman", serif;
+}
+code,
+output,
+kbd,
+pre {
+    font-family: Consolas, "Lucida Console", "Courier New", Courier,
+        monospace;
+        border: 1px solid #ddd;
+        background-color: #f8f8f8;
+}
+pre {
+    padding: 8px;
+}

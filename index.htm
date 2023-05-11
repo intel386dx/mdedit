@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Markdown Editor</title>
+
+        <!-- External dependencies: -->
+
+        <script src="jq.js"></script>
+        <!-- jQuery 3.6.4 -->
+
+        <script src="bs/js/bs.js" defer async></script>
+        <!-- Bootstrap.js 2.3.2 -->
+
+        <link rel="stylesheet" href="bs/css/bs.css" />
+        <!-- Bootstrap.css 2.3.2 -->
+
+        <script src="md.js" defer async></script>
+        <!-- MarkedJS 5.0.1 -->
+
+        <script src="td.js" defer async></script>
+        <!-- Turndown 7.1.2 -->
+
+        <script src="dp.js" defer async></script>
+        <!-- DOMPurify 3.0.3 -->
+
+        <link rel="stylesheet" href="index.css" />
+        <!-- The main design + tweaks to Bootstrap-->
+
+        <script src="index.js" defer async></script>
+        <!-- The main functionality-->
+
+        <!-- Thanks for the creators of the third-party libraries! -->
+    </head>
+    <body>
+        <div class="editor-container" id="editor-container">
+            <div class="navbar editor-menubar">
+                <div class="navbar-inner">
+                    <span class="brand">MDEdit</span>
+                    <ul class="nav">
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">File</a>
+                            <ul class="dropdown-menu icons">
+                                <li><a href="javascript:void(0)" id="cmd-new">New</a></li>
+                                <li><a href="javascript:void(0)" id="cmd-open">Open...</a></li>
+                                <li class="divider">Save As</li>
+                                <li><a href="javascript:void(0)" id="cmd-save-md">Save as Markdown...</a></li>
+                                <li><a href="javascript:void(0)" id="cmd-save-html">Save as HTML...</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Edit</a>
+                            <ul class="dropdown-menu icons">
+                                <li><a href="javascript:void(0)" id="cmd-copy">Copy</a></li>
+                                <li><a href="javascript:void(0)" id="cmd-cut">Cut</a></li>
+                                <li><a href="javascript:void(0)" id="cmd-paste">Paste</a></li>
+                                <li class="divider"></li>
+                                <li><a href="javascript:void(0)" id="cmd-select-all">Select All</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">View</a>
+                            <ul class="dropdown-menu icons">
+                                <li><a href="javascript:void(0)" id="cmd-full-screen">Full Screen</a></li>
+                                <li><a href="javascript:void(0)" id="cmd-toggle-autosplit">Toggle Autosplit Layout</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Help</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:void(0)" id="cmd-markdown-guide">Markdown Guide</a></li>
+                                <li><a href="javascript:void(0)" id="cmd-about">About MDEdit...</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="container autosplit" id="tab-container">
+                <ul class="nav nav-tabs">
+                    <li class="nav-items active">
+                        <a id="edit-tab" class="editor-tab nav-link" data-toggle="tab" href="#editor-edit-tab">Edit</a>
+                    </li>
+                    <li class="nav-items">
+                        <a id="preview-tab" class="editor-tab nav-link" data-toggle="tab" href="#editor-preview-tab">Preview</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="editor-edit-tab" class="editor-edit tab-pane active">
+                        <div class="tab-title">Edit</div>
+                        <div class="editor">
+                            <div class="font-family-pane">
+                                <span>Aa</span>
+                                <input type="text" id="font-family" class="font-family" placeholder="Font name"/>
+                            </div>
+                            <textarea class="editor-edit-field" id="editor-edit-field" placeholder="Start typing Markdown here"></textarea>
+                        </div>
+                    </div>
+                    <div id="editor-preview-tab" class="editor-preview tab-pane">
+                        <div class="tab-title">Preview
+                            <button id="refresh-frame" title="Refresh"><i class="material-icons">&#xE5D5;</i></button>
+                        </div>
+                        <iframe id="editor-preview-frame" class="editor-preview-frame"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="status-bar">
+                <div class="left-side">
+                    <div class="status danger" id="missing" title="Some of the components are missing. Please check your browser console.">Missing</div>
+                </div>
+                <div class="right-side">
+                    <div class="status parse-time" id="parse-time" title="Last parse time in milliseconds (1s = 1,000s)">0</div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

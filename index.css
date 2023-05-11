@@ -1,0 +1,336 @@
+@import url("icons/icons.css");
+* {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+}
+:root,
+html,
+body,
+.editor-container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+body {
+    background-color: #eee;
+}
+.editor-container {
+    border: 1px solid #ddd;
+    box-shadow: 0px 5px 10px rgb(0 0 0 / 20%);
+    background-color: white;
+}
+code,
+output,
+kbd,
+pre {
+    font-family: Consolas, "Lucida Console", "Courier New", Courier,
+        monospace;
+        border: 1px solid #ddd;
+        background-color: #f8f8f8;
+}
+pre {
+    padding: 8px;
+    overflow: auto;
+}
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    box-shadow: none !important;
+    border-radius: 0px;
+    border-color: #ddd;
+    font-family: inherit;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+.editor-menubar {
+    margin: 0px;
+}
+.editor-menubar * {
+    text-shadow: none !important;
+}
+.editor-menubar .navbar-inner {
+    background-color: white;
+    background-image: none;
+    border: 0px solid;
+    border-radius: 0px;
+    padding: 0px 12px;
+    box-shadow: none;
+}
+.editor-menubar .navbar-inner .brand {
+    padding: 8px 8px 8px 3px;
+    margin: 0px;
+}
+.editor-menubar .navbar-inner .dropdown-toggle {
+    padding: 10px 8px;
+    box-shadow: 0 0 8px white inset, 0 0 8px white inset,
+                0 0 8px white inset, 0 0 8px white inset;
+    text-shadow: 0 0 3px white, 0 0 3px white,
+                 0 0 3px white, 0 0 3px white !important;
+}
+.editor-menubar .navbar-inner .dropdown-toggle:hover {
+    background-color: #f8f8f8;
+}
+.editor-menubar .navbar-inner .dropdown.open .dropdown-toggle,
+.editor-menubar .navbar-inner .dropdown .dropdown-toggle:active {
+    background-color: #eee !important;
+}
+.editor-menubar .dropdown-menu {
+    margin: 0px;
+    border-radius: 0px;
+    padding: 4px;
+    font-size: 9pt;
+    background-color: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(4px)
+}
+.editor-menubar .dropdown-menu::before,
+.editor-menubar .dropdown-menu::after {
+    content: "";
+    display: none !important;
+}
+.editor-menubar .dropdown-menu .divider {
+    border-color: #ddd;
+    border-color: rgba(0, 0, 0, 0.15);
+    height: auto;
+    margin: 2px 0px;
+    padding: 0px 8px 0px 32px;
+    background-color: transparent;
+    font-size: 7pt;
+    text-transform: uppercase;
+}
+.editor-menubar .dropdown-menu li a {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    border-radius: 4px;
+    padding: 2px 16px;
+}
+.editor-menubar .dropdown-menu li a:hover,
+.editor-menubar .dropdown-menu li a:focus {
+    background-color: #08c;
+    background-image: none;
+}
+.editor-menubar .dropdown-menu li a:active {
+    background-color: #08c;
+    background-image: none;
+}
+.editor-menubar .dropdown-menu.icons li a {
+    padding: 2px 16px 2px 8px;
+}
+.editor-menubar .dropdown-menu.icons li a::before {
+    content: "";
+    font-family: "Material Icons";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+    margin-right: 8px;
+}
+#cmd-new::before {
+    content: "\E24D"
+}
+#cmd-open::before {
+    content: "\E2C7"
+}
+#cmd-save-md::before {
+    content: "\E161"
+}
+#cmd-copy::before {
+    content: "\E14D"
+}
+#cmd-cut::before {
+    content: "\E14E"
+}
+#cmd-paste::before {
+    content: "\E14F"
+}
+#cmd-select-all::before {
+    content: "\E162"
+}
+#cmd-full-screen::before {
+    content: "\E5D0"
+}
+#cmd-full-screen[state=true]::before {
+    content: "\E5D1"
+}
+#cmd-toggle-autosplit::before {
+    content: "\E871"
+}
+.nav-tabs {
+    margin: 0px;
+    padding: 0px 8px;
+    text-transform: uppercase;
+}
+.nav-tabs .nav-items .nav-link {
+    border: 0px solid !important;
+    border-radius: 0px;
+    margin: 0px;
+    color: black;
+}
+.nav-tabs .nav-items {
+    font-size: 9pt;
+}
+.nav-tabs .nav-items:hover {
+    border-bottom: 2px solid #f0f0f0;
+}
+.nav-tabs .nav-items.active {
+    border-bottom: 2px solid #08c;
+}
+.nav-tabs .nav-items .nav-link {
+    padding: 2px 8px;
+    box-shadow: 0 0 4px white inset, 0 0 4px white inset,
+                0 0 4px white inset, 0 0 4px white inset;
+}
+.nav-tabs .nav-items .nav-link:hover {
+    background-color: #f0f0f0;
+}
+.nav-tabs .nav-items.active .nav-link {
+    color: #08c;
+    background-color: #f0f8ff;
+}
+.tab-content,
+.tab-pane {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+.tab-pane {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    overflow: hidden;
+}
+.tab-pane .tab-title {
+    display: none;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 2px 0px;
+    margin: -8px 0px 8px;
+    border-bottom: 1px solid #ddd;
+    text-transform: uppercase;
+    user-select: none;
+}
+.tab-pane .tab-title button {
+    background-color: transparent;
+    background-image: none;
+    border: 0px solid;
+    border-radius: 0px;
+    color: #069
+}
+.tab-pane .tab-title button:hover {
+    background-color: #ddd;
+}
+.tab-pane .tab-title button:active {
+    background-color: #aaa;
+}
+.editor-edit {
+    display: flex;
+}
+.editor {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.editor-edit .editor-edit-field {
+    background-color: white;
+    border: 0px solid;
+    border-radius: 0px;
+    padding: 0px;
+    margin: 8px 0px 0px 0px;
+    width: 100%;
+    height: 100%;
+    resize: none;
+    font-family: Consolas, "Lucida Console", "Courier New", Courier,
+        monospace;
+    box-shadow: none !important;
+}
+.editor-preview .editor-preview-frame {
+    width: 100%;
+    height: 100%;
+    border: 0px solid;
+}
+.font-family-pane {
+    padding: 6px;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    display: flex;
+    gap: 6px;
+}
+.font-family-pane > span {
+    font-size: 9pt;
+    user-select: none;
+}
+.font-family-pane > .font-family {
+    margin: 0px;
+    width: 100%;
+    font-size: 9pt;
+}
+.status-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 9pt;
+    border-top: 1px solid #ddd;
+}
+.status-bar .left-side,
+.status-bar .right-side {
+    display: flex;
+    flex-direction: row;
+}
+.status {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    user-select: none;
+    padding: 2px 8px;
+    box-shadow: 0 0 4px white inset, 0 0 4px white inset,
+    0 0 4px white inset, 0 0 4px white inset;
+}
+.status.danger {
+    background-color: #fee;
+    color: #800;
+}
+.status::before {
+    margin-right: 2px;
+}
+.status-bar .left-side .status + .status,
+.status-bar .right-side .status + .status {
+    border-left: 1px solid #ddd;
+}
+#parse-time::before {
+    content: '\E425';
+    font-family: "Material Icons";
+}
+#parse-time::after {
+    content: "\00A0ms";
+}
+#missing::before {
+    content: '\E002';
+    font-family: "Material Icons";
+}
+@media only screen and (min-width: 600px) {
+    .container.autosplit .nav.nav-tabs {
+        display: none;
+    }
+    .container.autosplit .tab-content {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        padding: 0px 8px;
+    }
+    .container.autosplit .tab-content .tab-pane {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        flex-shrink: 1;
+    }
+    .container.autosplit .tab-content .tab-pane + .tab-pane {
+        border-left: 1px solid #ddd;
+    }
+    .container.autosplit .tab-content .tab-pane .tab-title {
+        display: flex;
+    }
+}
