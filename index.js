@@ -125,7 +125,7 @@ function copyText(el, cutText) {
 };
 
 function pasteText(el) {
-    /* console.log("Pasting procedure has been called");
+    console.log("Pasting procedure has been called");
     start = cursorStart | 0;
     console.log("start: " + start);
     end = cursorEnd | el.value.length;
@@ -143,8 +143,7 @@ function pasteText(el) {
         console.error("Cannot get the clipboard contents. Reason: \n" + x);
     });
     resultingText = before + toBeReplaced + after;
-    el.value = resultingText; */
-    document.execCommand("paste");
+    el.value = resultingText;
 };
 
 window.onbeforeunload = function() {
