@@ -9,22 +9,22 @@
 
         <!-- External dependencies: -->
 
-        <script src="jq.js"></script>
+        <script src="dep/jq/jq.js"></script>
         <!-- jQuery 3.6.4 -->
 
-        <script src="bs/js/bs.js" defer async></script>
+        <script src="dep/bs/js/bs.js" defer async></script>
         <!-- Bootstrap.js 2.3.2 -->
 
-        <link rel="stylesheet" href="bs/css/bs.css" />
+        <link rel="stylesheet" href="dep/bs/css/bs.css" />
         <!-- Bootstrap.css 2.3.2 -->
 
-        <script src="md.js" defer async></script>
+        <script src="dep/md/md.js" defer async></script>
         <!-- MarkedJS 5.0.1 -->
 
-        <script src="td.js" defer async></script>
+        <script src="dep/td/td.js" defer async></script>
         <!-- Turndown 7.1.2 -->
 
-        <script src="dp.js" defer async></script>
+        <script src="dep/dp/dp.js" defer async></script>
         <!-- DOMPurify 3.0.3 -->
 
         <link rel="stylesheet" href="index.css" />
@@ -36,7 +36,7 @@
         <!-- Thanks for the creators of the third-party libraries! -->
     </head>
     <body>
-        <div class="editor-container" id="editor-container">
+        <div class="editor-container autosplit" id="editor-container">
             <div class="navbar editor-menubar">
                 <div class="navbar-inner">
                     <span class="brand">MDEdit</span>
@@ -64,6 +64,9 @@
                                 <li><a href="javascript:void(0)" class="clipboard-ops" id="cmd-paste">Paste</a></li>
                                 <li class="divider"></li>
                                 <li><a href="javascript:void(0)" id="cmd-select-all">Select All</a></li>
+                                <li class="divider">History (Experimental)</li>
+                                <li><a href="javascript:void(0)" id="cmd-undo">Undo</a></li>
+                                <li><a href="javascript:void(0)" id="cmd-redo">Redo</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">

@@ -1,3 +1,5 @@
+MDEditVersion = [0, 1];
+
 function $i(id) {
     return document.getElementById(id);
 }
@@ -128,7 +130,7 @@ function pasteText(el) {
     console.log("Pasting procedure has been called");
     start = cursorStart | 0;
     console.log("start: " + start);
-    end = cursorEnd | el.value.length;
+    end = cursorEnd;
     console.log("end: " + end);
     before = el.value.substring(0, start);
     console.log("before: " + before);
@@ -139,11 +141,70 @@ function pasteText(el) {
     navigator.clipboard.readText().then(function(x) {
         toBeReplaced = x;
         console.log("text in clipboard: " + x);
+        resultingText = before + toBeReplaced + after;
+        console.log("resulting text: " + resultingText);
+        el.value = resultingText;
     }, function(x) {
         console.error("Cannot get the clipboard contents. Reason: \n" + x);
     });
-    resultingText = before + toBeReplaced + after;
-    el.value = resultingText;
+};
+
+undoHistory = [];
+const undoMaxlength = 50;
+undoInput = $i("editor-edit-field");
+undoIndex = -1;
+function saveState() {
+    undoMaxLength = 50;
+    value = undoInput.value;
+    if (undoHistory.length && undoHistory[undoIndex] == value) return;
+    undoHistory.splice(undoIndex + 1, undoHistory.length - undoIndex, value);
+    console.log(undoMaxLength);
+    if (undoHistory.length > undoMaxLength) undoHistory.shift();
+    undoIndex = undoHistory.length - 1;
+};
+function undo() {
+    if (undoIndex > 0) {
+        undoIndex = undoIndex - 1;
+        if (typeof undoHistory[undoIndex] !== "undefined") undoInput.value = undoHistory[undoIndex];
+    };
+};
+function redo() {
+    if (undoIndex < undoHistory.length - 1) {
+        undoIndex = undoIndex - 1;
+        if (typeof undoHistory[undoIndex] !== "undefined") undoInput.value = undoHistory[undoIndex];
+    };
+};
+saveStateTimeout = null;
+undoInput.oninput = function() {
+    clearTimeout(saveStateTimeout);
+    saveStateTimeout = setTimeout(function() {
+        saveState();
+    }, 1000);
+};
+
+window.fullScreen = false;
+function toggleFullscreen() {
+    doc = document.documentElement;
+    if (!window.fullScreen) {
+        if (doc.requestFullscreen) {
+            doc.requestFullscreen();
+        } else if (doc.webkitRequestFullscreen) { 
+            doc.webkitRequestFullscreen();
+        } else if (doc.msRequestFullscreen) { 
+            doc.msRequestFullscreen();
+        };
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { 
+            document.msExitFullscreen();
+        };
+    };
+    doc.onfullscreenchange = function(x) {
+        window.fullScreen = document.fullscreenElement != null;
+    };
 };
 
 window.onbeforeunload = function() {
@@ -249,6 +310,9 @@ function refreshFrame() {
             margin-top: 16px;
         }
         @media (prefers-color-scheme: dark) {
+            * {
+                scrollbar-color: #222;
+            }
         	body {
         	    color: white;
             }
@@ -284,7 +348,7 @@ function refreshFrame() {
 $i("preview-tab").onclick = $i("refresh-frame").onclick = refreshFrame;
 
 function toggleAutosplit() {
-    $i("tab-container").classList.toggle("autosplit")
+    $i("editor-container").classList.toggle("autosplit")
 };
 $i("cmd-toggle-autosplit").onclick = toggleAutosplit;
 
@@ -328,4 +392,58 @@ $i("cmd-paste").onclick = function() {
 };
 $i("cmd-select-all").onclick = function() {
     $i("editor-edit-field").select()
-}
+};
+$i("cmd-undo").onclick = function() {
+	undo();
+};
+$i("cmd-redo").onclick = function() {
+    redo();
+};
+$i("cmd-full-screen").onclick = function() {
+    toggleFullscreen()
+};
+$i("cmd-markdown-guide").onclick = function() {
+    window.open("https://www.markdownguide.org/", "_blank").focus()
+};
+$i("cmd-about").onclick = function() {
+    alert(`MDEdit v${MDEditVersion.join(".")}\n
+${"\u00A9"} 2023 Hilman Ahwas A.
+
+Licensed under the Apache License version 2.0 (see LICENSE in this directory)
+
+This application uses following third-party components. They are licensed with their respective licenses.
+1. Bootstrap 2.3.2 - The MIT License
+2. DOMPurify 3.0.3 - Apache License 2.0
+3. jQuery 3.6.4 - The MIT License
+4. MarkedJS 5.0.1 - The MIT License
+5. Turndown 7.1.2 - The MIT License
+6. Google Material Icons - Apache License 2.0
+
+Thanks to all the developers and contributors of the components above and on the Stack Overflow!`)
+};
+document.onkeydown = function(x) {
+    x.preventDefault()
+    if (x.ctrlKey) {
+        if (x.shiftKey) {
+            switch(x.code) {
+                case "KeyF": $i("cmd-full-screen").click();
+                case "KeyA": $i("cmd-toggle-autosplit").click();
+            };
+        };
+        switch(x.code) {
+            case "F1": $i("cmd-about").click();
+            case "KeyN": $i("cmd-new").click();
+            case "KeyO": $i("cmd-open").click();
+            case "KeyS": $i("cmd-save").click();
+            case "KeyC": $i("cmd-copy").click();
+            case "KeyX": $i("cmd-cut").click();
+            case "KeyV": $i("cmd-paste").click();
+            case "KeyA": $i("cmd-select-all").click();
+            case "KeyZ": $i("cmd-undo").click();
+            case "KeyY": $i("cmd-redo").click();
+        };
+    };
+    switch(x.code) {
+        case "F1": $i("cmd-markdown-guide").click();
+    };
+};

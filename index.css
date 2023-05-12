@@ -71,6 +71,7 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
     font-weight: 300;
 }
 .editor-menubar .navbar-inner .dropdown-toggle {
+    margin-bottom: -1px;
     padding: 10px 8px;
     box-shadow: 0 0 8px white inset, 0 0 8px white inset,
                 0 0 8px white inset, 0 0 8px white inset;
@@ -112,6 +113,7 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
     font-size: 7pt;
     text-transform: uppercase;
     line-height: 1.8em;
+    user-select: none;
 }
 .editor-menubar .dropdown-menu li a {
     display: flex;
@@ -181,6 +183,12 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 #cmd-paste::before {
     content: "\E14F"
 }
+#cmd-undo::before {
+    content: "\E166"
+}
+#cmd-redo::before {
+    content: "\E15A"
+}
 #cmd-select-all::before {
     content: "\E162"
 }
@@ -220,6 +228,7 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 }
 .nav-tabs .nav-items .nav-link:hover {
     background-color: #f0f0f0;
+    color: black;
 }
 .nav-tabs .nav-items.active .nav-link {
     color: #08c;
@@ -419,30 +428,70 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 	}
 }
 @media only screen and (min-width: 600px) {
-    .container.autosplit .nav.nav-tabs {
+    * {
+        scrollbar-color: #222;
+    }
+    .editor-container.autosplit .editor-menubar {
+        border-bottom: 1px solid #ddd;
+    }
+    .editor-container.autosplit .nav.nav-tabs {
         display: none;
     }
-    .container.autosplit .tab-content {
+    .editor-container.autosplit .tab-content {
         display: flex;
         flex-direction: row;
         align-items: stretch;
         padding: 0px 8px;
     }
-    .container.autosplit .tab-content .tab-pane {
+    .editor-container.autosplit .tab-content .tab-pane {
         display: flex;
         width: 100%;
         height: 100%;
         flex-shrink: 1;
     }
-    .container.autosplit .tab-content .tab-pane + .tab-pane {
+    .editor-container.autosplit .tab-content .tab-pane + .tab-pane {
         border-left: 1px solid #ddd;
     }
-    .container.autosplit .tab-content .tab-pane .tab-title {
+    .editor-container.autosplit .tab-content .tab-pane .tab-title {
         display: flex;
     }
 }
 @media (prefers-color-scheme: dark) {
+    ::-webkit-scrollbar {
+        width: 16px;
+        height: 16px;
+        cursor: pointer !important;
+        opacity: 0;
+    }
+    ::-webkit-scrollbar:hover {
+        opacity: 1;
+    }
+    ::-webkit-scrollbar-button {
+        height: 4px;
+        width: 16px;
+        background-color: #222;
+        transition-duration: 0.25s;
+    }
+    ::-webkit-scrollbar-button:horizontal {
+        height: 16px;
+        width: 4px;
+    }
+    ::-webkit-scrollbar-button:hover {
+        height: 16px;
+        width: 16px;
+        background-color: #888;
+    }
+    ::-webkit-scrollbar-button:active {
+        background-color: #666;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: #888;
+    }
+    ::-webkit-scrollbar-track, ::-webkit-scrollbar-corner {
+        background-color: #222;
+    }
 	body {
+        background-color: #222;
 		color: white;
 	}
 	input, textarea {
@@ -463,22 +512,28 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 	.font-family-pane, .status-bar {
 		background-color: #444;
 	}
+    .editor-menubar .brand {
+        color: lightgray;
+    }
 	.editor-menubar .navbar-inner .dropdown-toggle {
 		color: lightgray;
 	    padding: 10px 8px;
 	    box-shadow: 0 0 8px black inset, 0 0 8px black inset,
 	                0 0 8px black inset, 0 0 8px black inset;
-	    text-shadow: 0 0 3px black, 0 0 3px black,
-	                 0 0 3px black, 0 0 3px black !important;
+	    text-shadow: 0 0 3px black, 0 0 3px black !important;
 	    border-bottom: 2px solid transparent;
 	}
+    .editor-menubar .navbar-inner .dropdown-toggle:focus {
+        color: white;
+	}
 	.editor-menubar .navbar-inner .dropdown-toggle:hover {
-	    background-color: #444;
+	    background-color: #111;
 	    border-bottom: 2px solid #666;
+        color: white;
 	}
 	.editor-menubar .navbar-inner .dropdown.open .dropdown-toggle,
 	.editor-menubar .navbar-inner .dropdown .dropdown-toggle:active {
-	    background-color: #002040 !important;
+	    background-color: #012 !important;
 	    border-bottom: 2px solid #08f;
 	    color: #08f !important;
 	}
@@ -507,16 +562,23 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 	    background-color: #08c;
 	    background-image: none;
 	}
+    .nav-tabs .nav-items:hover {
+        border-color: gray;
+    }
+    .nav-tabs .nav-items.active:hover {
+        border-color: #08c;
+    }
 	.nav-tabs .nav-items .nav-link {
-		color: white;
+		color: lightgray;
 	}
 	.nav-tabs .nav-items .nav-link {
 	    padding: 2px 8px;
 	    box-shadow: 0 0 4px black inset, 0 0 4px black inset,
 	                0 0 4px black inset, 0 0 4px black inset;
 	}
-	.nav-tabs .nav-items .nav-link:hover {
+    .nav-tabs .nav-items .nav-link:hover {
 	    background-color: #444;
+        color: white;
 	}
 	.nav-tabs .nav-items.active .nav-link {
 	    color: #08c !important;
@@ -533,7 +595,7 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 	                 0 0 1px black, 0 0 1px black !important;
 	}
 	.tab-pane .tab-title button:hover {
-	    background-color: #444;
+	    background-color: #444
 	}
 	.tab-pane .tab-title button:active {
 	    background-color: #002040;
@@ -557,7 +619,10 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 	    border-left: 1px solid #666;
 	}
 	@media only screen and (min-width: 600px) {
-	    .container.autosplit .tab-content .tab-pane + .tab-pane {
+        .editor-container.autosplit .editor-menubar {
+            border-bottom: 1px solid #666;
+        }
+	    .editor-container.autosplit .tab-content .tab-pane + .tab-pane {
 	        border-left: 1px solid #666;
 	    }
 	}
