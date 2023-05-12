@@ -53,6 +53,10 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 .editor-menubar * {
     text-shadow: none !important;
 }
+.editor-menubar .navbar-inner,
+.nav-tabs, .status-bar {
+	background-color: white;
+}
 .editor-menubar .navbar-inner {
     background-color: white;
     background-image: none;
@@ -64,6 +68,7 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 .editor-menubar .navbar-inner .brand {
     padding: 8px 8px 8px 3px;
     margin: 0px;
+    font-weight: 300;
 }
 .editor-menubar .navbar-inner .dropdown-toggle {
     padding: 10px 8px;
@@ -435,4 +440,125 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
     .container.autosplit .tab-content .tab-pane .tab-title {
         display: flex;
     }
+}
+@media (prefers-color-scheme: dark) {
+	body {
+		color: white;
+	}
+	input, textarea {
+		background-color: black !important;
+		border-color: #666 !important;
+		color: white !important;
+	}
+	::placeholder {
+		color: #888 !important;
+	}
+	.container, .editor-container, .editor-menubar, .editor-menubar .navbar-inner, 
+    .nav, .font-family, .editor-edit-field {
+		background-color: black !important;
+	}
+	.editor-container, .nav-tabs, .font-family-pane, .status-bar {
+		border-color: #666;
+	}
+	.font-family-pane, .status-bar {
+		background-color: #444;
+	}
+	.editor-menubar .navbar-inner .dropdown-toggle {
+		color: lightgray;
+	    padding: 10px 8px;
+	    box-shadow: 0 0 8px black inset, 0 0 8px black inset,
+	                0 0 8px black inset, 0 0 8px black inset;
+	    text-shadow: 0 0 3px black, 0 0 3px black,
+	                 0 0 3px black, 0 0 3px black !important;
+	    border-bottom: 2px solid transparent;
+	}
+	.editor-menubar .navbar-inner .dropdown-toggle:hover {
+	    background-color: #444;
+	    border-bottom: 2px solid #666;
+	}
+	.editor-menubar .navbar-inner .dropdown.open .dropdown-toggle,
+	.editor-menubar .navbar-inner .dropdown .dropdown-toggle:active {
+	    background-color: #002040 !important;
+	    border-bottom: 2px solid #08f;
+	    color: #08f !important;
+	}
+	.editor-menubar .dropdown-menu {
+	    background-color: rgba(0, 0, 0, 0.75);
+	    border-color: #444;
+	    border-color: rgba(255, 255, 255, 0.25);
+	}
+	.editor-menubar .dropdown-menu .divider {
+		color: gray;
+	    border-color: #444;
+	    border-color: rgba(255, 255, 255, 0.25);
+	}
+	.editor-menubar .dropdown-menu .divider a {
+	    color: #08c;
+	}
+	.editor-menubar .dropdown-menu li a {
+		color: white;
+	}
+	.editor-menubar .dropdown-menu li a:hover,
+	.editor-menubar .dropdown-menu li a:focus {
+	    background-color: #08c;
+	    background-image: none;
+	}
+	.editor-menubar .dropdown-menu li a:active {
+	    background-color: #08c;
+	    background-image: none;
+	}
+	.nav-tabs .nav-items .nav-link {
+		color: white;
+	}
+	.nav-tabs .nav-items .nav-link {
+	    padding: 2px 8px;
+	    box-shadow: 0 0 4px black inset, 0 0 4px black inset,
+	                0 0 4px black inset, 0 0 4px black inset;
+	}
+	.nav-tabs .nav-items .nav-link:hover {
+	    background-color: #444;
+	}
+	.nav-tabs .nav-items.active .nav-link {
+	    color: #08c !important;
+	    background-color: #002040;
+	}
+	.tab-pane .tab-title {
+	    border-bottom: 1px solid #666;
+	}
+	.tab-pane .tab-title button {
+		color: white;
+	    box-shadow: 0 0 4px black inset, 0 0 4px black inset,
+	                0 0 4px black inset, 0 0 4px black inset;
+	    text-shadow: 0 0 1px black, 0 0 1px black,
+	                 0 0 1px black, 0 0 1px black !important;
+	}
+	.tab-pane .tab-title button:hover {
+	    background-color: #444;
+	}
+	.tab-pane .tab-title button:active {
+	    background-color: #002040;
+	    color: #08c;
+	}
+	.status {
+	    display: flex;
+	    flex-direction: row;
+	    align-items: stretch;
+	    user-select: none;
+	    padding: 2px 8px;
+	    box-shadow: 0 0 4px #444 inset, 0 0 4px #444 inset,
+	    0 0 4px #444 inset, 0 0 4px #444 inset;
+	}
+	.status.danger {
+	    background-color: #400;
+	    color: #fee;
+	}
+	.status-bar .left-side .status + .status,
+	.status-bar .right-side .status + .status {
+	    border-left: 1px solid #666;
+	}
+	@media only screen and (min-width: 600px) {
+	    .container.autosplit .tab-content .tab-pane + .tab-pane {
+	        border-left: 1px solid #666;
+	    }
+	}
 }

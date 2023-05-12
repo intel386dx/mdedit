@@ -242,6 +242,27 @@ function refreshFrame() {
         blockquote p + p {
             margin-top: 16px;
         }
+        @media (prefers-color-scheme: dark) {
+        	body {
+        	    color: white;
+            }
+            table, th, td {
+            	border-color: #666;
+            }
+            th {
+            	background-color: #444;
+            }
+            code,
+	        output,
+	        kbd,
+	        pre {
+	            font-family: Consolas, "Lucida Console", "Courier New", Courier,
+	                monospace;
+	                border: 1px solid #666;
+	                background-color: #444;
+	            padding-inline: 4px;
+	        }
+        }
         </style>
         </head>
         <body style="font-family:${sanitizedFont}">
