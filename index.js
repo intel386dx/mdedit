@@ -125,19 +125,26 @@ function copyText(el, cutText) {
 };
 
 function pasteText(el) {
+    /* console.log("Pasting procedure has been called");
     start = cursorStart | 0;
+    console.log("start: " + start);
     end = cursorEnd | el.value.length;
+    console.log("end: " + end);
     before = el.value.substring(0, start);
+    console.log("before: " + before);
     after = el.value.substring(end);
-    toBePasted = el.value.substring(start, end);
+    console.log("after: " + after);
+    toBeReplaced = el.value.substring(start, end);
+    console.log("to be replaced: " + toBeReplaced);
     navigator.clipboard.readText().then(function(x) {
-        toBePasted = x;
+        toBeReplaced = x;
+        console.log("text in clipboard: " + x);
     }, function(x) {
-        console.error("Cannot get the clipboard contents. Reason: \n");
-        console.error(x);
+        console.error("Cannot get the clipboard contents. Reason: \n" + x);
     });
-    resultingText = before + toBePasted + after;
-    el.value = resultingText;
+    resultingText = before + toBeReplaced + after;
+    el.value = resultingText; */
+    document.execCommand("paste");
 };
 
 window.onbeforeunload = function() {
