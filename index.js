@@ -402,6 +402,9 @@ $i("cmd-redo").onclick = function() {
 $i("cmd-full-screen").onclick = function() {
     toggleFullscreen()
 };
+$i("cmd-refresh-frame").onclick = function() {
+    $i("preview-tab").click();
+};
 $i("cmd-markdown-guide").onclick = function() {
     window.open("https://www.markdownguide.org/", "_blank").focus()
 };
@@ -422,28 +425,30 @@ This application uses following third-party components. They are licensed with t
 Thanks to all the developers and contributors of the components above and on the Stack Overflow!`)
 };
 document.onkeydown = function(x) {
-    x.preventDefault()
-    if (x.ctrlKey) {
+    if (x.altKey) {
         if (x.shiftKey) {
             switch(x.code) {
+                case "F1": $i("cmd-about").click();
                 case "KeyF": $i("cmd-full-screen").click();
                 case "KeyA": $i("cmd-toggle-autosplit").click();
+                case "KeyS": $i("cmd-save-html").click();
+                case "KeyE": $i("cmd-refresh-frame").click();
             };
         };
         switch(x.code) {
-            case "F1": $i("cmd-about").click();
+            case "F1": $i("cmd-markdown-guide").click();
             case "KeyN": $i("cmd-new").click();
             case "KeyO": $i("cmd-open").click();
-            case "KeyS": $i("cmd-save").click();
-            case "KeyC": $i("cmd-copy").click();
-            case "KeyX": $i("cmd-cut").click();
-            case "KeyV": $i("cmd-paste").click();
-            case "KeyA": $i("cmd-select-all").click();
+            case "KeyS": $i("cmd-save-md").click();
+            // case "KeyC": $i("cmd-copy").click();
+            // case "KeyX": $i("cmd-cut").click();
+            // case "KeyV": $i("cmd-paste").click();
+            // case "KeyA": $i("cmd-select-all").click();
             case "KeyZ": $i("cmd-undo").click();
             case "KeyY": $i("cmd-redo").click();
         };
     };
     switch(x.code) {
-        case "F1": $i("cmd-markdown-guide").click();
+        // case "F5": $i("cmd-refresh-frame").click();
     };
 };

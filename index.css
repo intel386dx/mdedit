@@ -126,6 +126,7 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 .editor-menubar .dropdown-menu li a:focus {
     background-color: #08c;
     background-image: none;
+    color: white;
 }
 .editor-menubar .dropdown-menu li a:active {
     background-color: #08c;
@@ -133,6 +134,16 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 }
 .editor-menubar .dropdown-menu.icons li a {
     padding: 2px 16px 2px 8px;
+}
+.editor-menubar .dropdown-menu li a .keyboard-shortcut {
+    margin-left: auto;
+    padding-left: 4px;
+    font-size: 7pt;
+    color: gray;
+}
+.editor-menubar .dropdown-menu li a:hover .keyboard-shortcut,
+.editor-menubar .dropdown-menu li a:focus .keyboard-shortcut {
+    color: white;
 }
 .editor-menubar .dropdown-menu.icons li a::before {
     content: "";
